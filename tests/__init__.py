@@ -1,0 +1,1 @@
+"""Unit test package for cfb_rankings_analysis."""
