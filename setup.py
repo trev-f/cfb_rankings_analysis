@@ -7,4 +7,12 @@ setup(
     description='Analyze historical rankings and ratings for college football teams.',
     author='Trevor F. Freeman',
     license='MIT',
+    install_requires=[
+        'Click',
+    ],
+    entry_points={
+        'console_scripts': [
+            'cfb-rankings-analysis = cfb_rankings_analysis.cli:cli',
+        ],
+    },
 )
