@@ -1,10 +1,12 @@
 import click
+import logging
 
 
 class Config(object):
 
     def __init__(self):
         self.verbose = False
+        self.logger = None
 
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
@@ -14,12 +16,55 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 @pass_config
 def cli(config, verbose):
     config.verbose = verbose
+    config.logger = create_logger(verbose)
+
+    config.logger.info("Start program!")
 
 
 @cli.command()
 @pass_config
 def say_hello(config):
     """Print a simple 'Hello World!' to the console."""
+    config.logger.info("Say Hello")
+
     if config.verbose:
         click.echo("We are in verbose mode.")
+
     click.echo('Hello World!')
+
+    config.logger.info("Said hello")
+
+    config.logger.error("Test error")
+
+
+def create_logger(verbose):
+    # create the logger
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+
+    # create a file handler
+    file_handler = logging.FileHandler(".log")
+    file_handler.setLevel(logging.DEBUG)
+
+    # create a console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(set_handler_level(verbose))
+
+    # create formatter and add to handlers
+    formatter = logging.Formatter('%(asctime)s :: %(name)s :: %(levelname)s :: %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+
+    # add handlers to logger
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+
+    return logger
+
+
+def set_handler_level(verbose):
+    if verbose:
+        return logging.DEBUG
+    else:
+        return logging.ERROR
+
