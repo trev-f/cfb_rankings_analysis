@@ -15,26 +15,22 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 @click.option('--verbose', '-v', is_flag=True, help="Print more logging messages.")
 @pass_config
 def cli(config, verbose):
+    """Run commands from cfb_rankings_analysis module."""
     config.verbose = verbose
     config.logger = create_logger(verbose)
 
-    config.logger.info("Start program!")
+    config.logger.info("Start CLI program.")
 
 
 @cli.command()
 @pass_config
 def say_hello(config):
     """Print a simple 'Hello World!' to the console."""
-    config.logger.info("Say Hello")
-
-    if config.verbose:
-        click.echo("We are in verbose mode.")
+    config.logger.info("Say hello")
 
     click.echo('Hello World!')
 
     config.logger.info("Said hello")
-
-    config.logger.error("Test error")
 
 
 def create_logger(verbose):
