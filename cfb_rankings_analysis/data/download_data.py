@@ -10,9 +10,7 @@ def main():
 
 def download_betting_lines():
     # Configure API key authorization: ApiKeyAuth
-    configuration = cfbd.Configuration()
-    configuration.api_key['Authorization'] = get_environment_variable("cfbd_api_key")
-    configuration.api_key_prefix['Authorization'] = 'Bearer'
+    configuration = configure_cfbd_api_auth()
 
     # create an instance of the API class
     api_instance = cfbd.BettingApi(cfbd.ApiClient(configuration))
@@ -31,6 +29,11 @@ def download_betting_lines():
 
 def configure_cfbd_api_auth() -> cfbd.Configuration:
     """Configure API key authorization: ApiKeyAuth for College Football Data API"""
+    configuration = cfbd.Configuration()
+    configuration.api_key['Authorization'] = get_environment_variable("cfbd_api_key")
+    configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+    return configuration
 
 
 def get_environment_variable(env_var: str) -> str:
