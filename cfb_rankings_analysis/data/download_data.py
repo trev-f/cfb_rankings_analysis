@@ -5,26 +5,22 @@ import os
 
 
 def main():
-    download_betting_lines()
+    download_elo()
 
 
-def download_betting_lines():
+def download_elo():
     # Configure API key authorization: ApiKeyAuth
     configuration = configure_cfbd_api_auth()
 
     # create an instance of the API class
-    api_instance = cfbd.BettingApi(cfbd.ApiClient(configuration))
-    year = 2022 # int | Year/season filter for games (optional)
-    week = 4 # int | Week filter (optional)
-    season_type = 'regular' # str | Season type filter (regular or postseason) (optional) (default to regular)
-    team = 'Tennessee' # str | Team (optional)
+    api_instance = cfbd.RatingsApi(cfbd.ApiClient(configuration))
 
     try:
         # Betting lines
-        api_response = api_instance.get_lines(year=year, week=week, season_type=season_type, team=team)
+        api_response = api_instance.get_elo_ratings(year=2022, week=1, team="Tennessee")
         print(api_response)
     except ApiException as e:
-        print("Exception when calling BettingApi->get_lines: %s\n" % e)
+        print("Exception when calling RatingsApi->get_elo_ratings: %s\n" % e)
 
 
 def configure_cfbd_api_auth() -> cfbd.Configuration:
