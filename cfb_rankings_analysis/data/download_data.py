@@ -8,7 +8,7 @@ def main():
     print("This script downloads external data.")
 
 
-def download_elo(**kwargs):
+def fetch_elo(**kwargs):
     """Download historical Elo ratings"""
     configuration = configure_cfbd_api_auth()
     ratings_api_instance = cfbd.RatingsApi(cfbd.ApiClient(configuration))
