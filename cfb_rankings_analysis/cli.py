@@ -37,7 +37,7 @@ def say_hello(config):
 @cli.command()
 @pass_config
 def download_data(config):
-    """Print a simple 'Hello World!' to the console."""
+    """Download external data. Dumps data into ../data/external"""
     config.logger.info("Downloading data...")
 
     cfb_rankings_analysis.data.download_data.main()
