@@ -5,7 +5,7 @@ import os
 
 
 def main():
-    download_elo()
+    print("This script downloads external data.")
 
 
 def download_elo():

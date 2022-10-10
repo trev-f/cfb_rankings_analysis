@@ -1,5 +1,6 @@
 import click
 import logging
+import cfb_rankings_analysis.data.download_data
 
 
 class Config(object):
@@ -31,6 +32,17 @@ def say_hello(config):
     click.echo("Hello World!")
 
     config.logger.info("Said hello")
+
+
+@cli.command()
+@pass_config
+def download_data(config):
+    """Print a simple 'Hello World!' to the console."""
+    config.logger.info("Downloading data...")
+
+    cfb_rankings_analysis.data.download_data.main()
+
+    config.logger.info("Data download finished")
 
 
 def create_logger(verbose):
