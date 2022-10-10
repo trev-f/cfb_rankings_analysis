@@ -7,3 +7,10 @@ def test_say_hello():
     result = runner.invoke(cli, ["say-hello"])
     assert result.exit_code == 0
     assert "Hello World" in result.output
+
+
+def test_download_data():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["download-data"])
+    assert result.exit_code == 0
+    assert "This script downloads external data." in result.output

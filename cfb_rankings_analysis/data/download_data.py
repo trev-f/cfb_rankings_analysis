@@ -5,22 +5,16 @@ import os
 
 
 def main():
-    download_elo()
+    print("This script downloads external data.")
 
 
-def download_elo():
-    # Configure API key authorization: ApiKeyAuth
+def fetch_elo(**kwargs):
+    """Download historical Elo ratings"""
     configuration = configure_cfbd_api_auth()
+    ratings_api_instance = cfbd.RatingsApi(cfbd.ApiClient(configuration))
+    elo_response = get_elo_api_response(ratings_api_instance, **kwargs)
 
-    # create an instance of the API class
-    api_instance = cfbd.RatingsApi(cfbd.ApiClient(configuration))
-
-    try:
-        # Betting lines
-        api_response = api_instance.get_elo_ratings(year=2022, week=1, team="Tennessee")
-        print(api_response)
-    except ApiException as e:
-        print("Exception when calling RatingsApi->get_elo_ratings: %s\n" % e)
+    return elo_response
 
 
 def configure_cfbd_api_auth() -> cfbd.Configuration:
@@ -30,6 +24,16 @@ def configure_cfbd_api_auth() -> cfbd.Configuration:
     configuration.api_key_prefix['Authorization'] = 'Bearer'
 
     return configuration
+
+
+def get_elo_api_response(api_instance: cfbd.api.ratings_api.RatingsApi, **kwargs) -> list:
+    """Get Team Historical Elo ratings"""
+    try:
+        elo_response = api_instance.get_elo_ratings(**kwargs)
+    except ApiException as e:
+        print(f"Exception when calling RatingsApi->get_elo_ratings: {e}\n")
+    else:
+        return elo_response
 
 
 def get_environment_variable(env_var: str) -> str:
